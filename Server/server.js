@@ -34,9 +34,12 @@ const corsOptions = {
 const morganFormat = process.env.NODE_ENV === "production" ? "combined" : "dev";
 app.use(morgan(morganFormat));
 
-app.use(helmet());
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: "cross-origin" }
+}));
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use('/uploads', express.static('uploads'));
 
 app.use("/user", userRoutes);
 app.use("/posts", postRoutes);

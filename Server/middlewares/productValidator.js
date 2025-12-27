@@ -43,7 +43,10 @@ export const createProductValidator = [
 // Validador para actualizar un producto
 export const updateProductValidator = [
     param("id")
-        .isInt({ min: 1 })
+        .custom((value) => {
+            const num = Number(value);
+            return !isNaN(num) && num > 0 && Number.isInteger(num);
+        })
         .withMessage("El ID debe ser un número entero positivo"),
     body("name")
         .optional()
@@ -81,7 +84,10 @@ export const updateProductValidator = [
 // Validador para parámetros de ID
 export const idParamValidator = [
     param("id")
-        .isInt({ min: 1 })
+        .custom((value) => {
+            const num = Number(value);
+            return !isNaN(num) && num > 0 && Number.isInteger(num);
+        })
         .withMessage("El ID debe ser un número entero positivo"),
     (req, res, next) => {
         const errors = validationResult(req);

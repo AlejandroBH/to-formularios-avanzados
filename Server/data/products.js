@@ -9,6 +9,7 @@ export const products = [
         createdAt: new Date("2025-12-20"),
         favorites: 0,
         favoritedBy: [],
+        imageUrl: null,
     },
     {
         id: 2,
@@ -20,6 +21,7 @@ export const products = [
         createdAt: new Date("2025-12-21"),
         favorites: 0,
         favoritedBy: [],
+        imageUrl: null,
     },
     {
         id: 3,
@@ -31,6 +33,7 @@ export const products = [
         createdAt: new Date("2025-12-22"),
         favorites: 0,
         favoritedBy: [],
+        imageUrl: null,
     },
     {
         id: 4,
@@ -42,5 +45,6 @@ export const products = [
         createdAt: new Date("2025-12-23"),
         favorites: 0,
         favoritedBy: [],
+        imageUrl: null,
     },
 ];

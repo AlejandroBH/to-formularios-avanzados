@@ -14,6 +14,7 @@ import {
     idParamValidator,
 } from "../middlewares/productValidator.js";
 import { authenticateToken } from "../middlewares/authMiddleware.js";
+import upload from "../middlewares/uploadConfig.js";
 
 const productRouter = Router();
 
@@ -21,7 +22,7 @@ const productRouter = Router();
 productRouter.get("/", getAllProducts);
 productRouter.get("/favorites", authenticateToken, getFavoriteProducts);
 productRouter.get("/:id", idParamValidator, getProductById);
-productRouter.post("/", authenticateToken, createProductValidator, createProduct);
+productRouter.post("/", authenticateToken, upload.single('image'), createProductValidator, createProduct);
 productRouter.put("/:id", authenticateToken, updateProductValidator, updateProduct);
 productRouter.delete("/:id", authenticateToken, idParamValidator, deleteProduct);
 productRouter.patch("/:id/favorite", authenticateToken, idParamValidator, favoriteProduct);

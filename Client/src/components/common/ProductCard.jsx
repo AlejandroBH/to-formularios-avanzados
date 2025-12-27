@@ -11,6 +11,22 @@ const ProductCard = ({ product, onFavorite }) => {
 
     return (
         <div className="product-card">
+            {product.imageUrl && (
+                <div className="product-image">
+                    <img
+                        src={`http://localhost:3000${product.imageUrl}`}
+                        alt={product.name}
+                        onError={(e) => {
+                            e.target.style.display = 'none';
+                        }}
+                    />
+                </div>
+            )}
+            {!product.imageUrl && (
+                <div className="product-image-placeholder">
+                    <span>📦</span>
+                </div>
+            )}
             <div className="product-header">
                 <h3 className="product-name">{product.name}</h3>
                 <span className="product-category">{product.category}</span>

@@ -132,7 +132,22 @@ export const getProducts = async () => {
 // Crear un nuevo producto invalida el cache después de crear
 export const createProduct = async (productData) => {
   try {
-    const response = await api.post("/products", productData);
+    const formData = new FormData();
+    formData.append('name', productData.name);
+    formData.append('description', productData.description);
+    formData.append('price', productData.price);
+    formData.append('stock', productData.stock);
+    formData.append('category', productData.category);
+
+    if (productData.image) {
+      formData.append('image', productData.image);
+    }
+
+    const response = await api.post("/products", formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
 
     cacheService.invalidate(CACHE_KEYS.PRODUCTS);
 

@@ -25,6 +25,18 @@ export const getProductById = async (req, res) => {
 export const createProduct = async (req, res) => {
     try {
         const data = req.body;
+
+        if (data.price) {
+            data.price = parseFloat(data.price);
+        }
+        if (data.stock) {
+            data.stock = parseInt(data.stock);
+        }
+
+        if (req.file) {
+            data.imageUrl = `/uploads/products/${req.file.filename}`;
+        }
+
         const newProduct = productService.createProduct(data);
         res.status(201).json(newProduct);
     } catch (error) {

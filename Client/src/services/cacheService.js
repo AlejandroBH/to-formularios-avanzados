@@ -15,10 +15,8 @@ class CacheService {
       const cached = this.memoryCache.get(key);
 
       if (this._isValid(cached)) {
-        console.log(`[Cache] ✅ HIT (memoria): ${key}`);
         return cached.data;
       } else {
-        console.log(`[Cache] ⏰ EXPIRED (memoria): ${key}`);
         this.memoryCache.delete(key);
       }
     }
@@ -32,12 +30,10 @@ class CacheService {
         const parsed = JSON.parse(cached);
 
         if (this._isValid(parsed)) {
-          console.log(`[Cache] ✅ HIT (localStorage): ${key}`);
           // Restaurar en memoria para próximas consultas
           this.memoryCache.set(key, parsed);
           return parsed.data;
         } else {
-          console.log(`[Cache] ⏰ EXPIRED (localStorage): ${key}`);
           localStorage.removeItem(storageKey);
         }
       }
@@ -45,7 +41,6 @@ class CacheService {
       console.error(`[Cache] ❌ Error al leer localStorage:`, error);
     }
 
-    console.log(`[Cache] ❌ MISS: ${key}`);
     return null;
   }
 
@@ -59,13 +54,11 @@ class CacheService {
 
     // Guardar en memoria
     this.memoryCache.set(key, cacheEntry);
-    console.log(`[Cache] 💾 SET (memoria): ${key}, TTL: ${ttl}ms`);
 
     // Guardar en localStorage
     try {
       const storageKey = this.storagePrefix + key;
       localStorage.setItem(storageKey, JSON.stringify(cacheEntry));
-      console.log(`[Cache] 💾 SET (localStorage): ${key}`);
     } catch (error) {
       console.error(`[Cache] ❌ Error al guardar en localStorage:`, error);
 
@@ -87,14 +80,12 @@ class CacheService {
     // Eliminar de memoria
     if (this.memoryCache.has(key)) {
       this.memoryCache.delete(key);
-      console.log(`[Cache] 🗑️ INVALIDATE (memoria): ${key}`);
     }
 
     // Eliminar de localStorage
     try {
       const storageKey = this.storagePrefix + key;
       localStorage.removeItem(storageKey);
-      console.log(`[Cache] 🗑️ INVALIDATE (localStorage): ${key}`);
     } catch (error) {
       console.error(`[Cache] ❌ Error al invalidar localStorage:`, error);
     }
@@ -104,7 +95,6 @@ class CacheService {
   clear() {
     // Limpiar memoria
     this.memoryCache.clear();
-    console.log(`[Cache] 🧹 CLEAR (memoria)`);
 
     // Limpiar localStorage
     try {
@@ -117,7 +107,6 @@ class CacheService {
       }
 
       keysToRemove.forEach(key => localStorage.removeItem(key));
-      console.log(`[Cache] 🧹 CLEAR (localStorage): ${keysToRemove.length} items`);
     } catch (error) {
       console.error(`[Cache] ❌ Error al limpiar localStorage:`, error);
     }
@@ -181,7 +170,6 @@ class CacheService {
       }
 
       keysToRemove.forEach(key => localStorage.removeItem(key));
-      console.log(`[Cache] 🧹 Limpiadas ${keysToRemove.length} entradas expiradas de localStorage`);
     } catch (error) {
       console.error(`[Cache] ❌ Error al limpiar entradas expiradas:`, error);
     }
